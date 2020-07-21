@@ -419,7 +419,7 @@ def masked_auto_waterfall_lineplot (ant,colorbar_min, colorbar_max):
 
 
 #returns the array for the expected bandpass
-def expected_bandpass()
+def expected_bandpass():
     good_curves = [uv.get_data((0,0, uv.polarization_array[0])),
                    uv.get_data((1,1, uv.polarization_array[0])),
                    uv.get_data((13,13, uv.polarization_array[0])),
