@@ -8,6 +8,12 @@ import matplotlib.colors as colors
 import matplotlib.gridspec as gridspec
 import numpy.ma as ma
 
+#variables used throughout functions
+uv = UVData()
+freq = uv.freq_array[0]*1e-6
+antnums = uv.antenna_numbers
+times = np.unique(uv.time_array)
+
 #plots all auto waterfall+line plots for the loaded file
 def allauto_waterfall_lineplot (colorbar_min, colorbar_max):
     
