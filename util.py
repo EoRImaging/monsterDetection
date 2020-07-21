@@ -1,5 +1,13 @@
 #useful functions
 
+import os
+from pyuvdata import UVData
+import numpy as np
+from matplotlib import pyplot as plt
+import matplotlib.colors as colors
+import matplotlib.gridspec as gridspec
+import numpy.ma as ma
+
 #plots all auto waterfall+line plots for the loaded file
 def allauto_waterfall_lineplot (colorbar_min, colorbar_max):
     
