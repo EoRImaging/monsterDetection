@@ -8,14 +8,9 @@ import matplotlib.colors as colors
 import matplotlib.gridspec as gridspec
 import numpy.ma as ma
 
-#variables used throughout functions
-uv = UVData()
-freq = uv.freq_array[0]*1e-6
-antnums = uv.antenna_numbers
-times = np.unique(uv.time_array)
 
 #plots all auto waterfall+line plots for the loaded file
-def allauto_waterfall_lineplot (colorbar_min, colorbar_max):
+def allauto_waterfall_lineplot (uv,colorbar_min, colorbar_max):
     
     for ant in uv.antenna_numbers:
         freq = uv.freq_array[0]*1e-6
@@ -115,7 +110,7 @@ def allauto_waterfall_lineplot (colorbar_min, colorbar_max):
     return;
 
 #plots a single waterfall+line plot for the given antenna and colorbar lims
-def auto_waterfall_lineplot (ant,colorbar_min, colorbar_max):
+def auto_waterfall_lineplot (uv,ant,colorbar_min, colorbar_max):
     
     freq = uv.freq_array[0]*1e-6
     fig = plt.figure(figsize=(20,20))
@@ -214,7 +209,10 @@ def auto_waterfall_lineplot (ant,colorbar_min, colorbar_max):
 
 
 #makes a lineplot every hour for the given antenna and loaded file
-def every_hour_lineplot(ant):
+def every_hour_lineplot(uv,ant):
+
+    freq = uv.freq_array[0]*1e-6
+    times = np.unique(uv.time_array)
 
     fig = plt.figure(figsize=(20,20))
 
@@ -257,7 +255,8 @@ def every_hour_lineplot(ant):
         i +=1
 
 #mask the inputted array
-def mask(input_array):
+def mask(uv,input_array):
+
     #this blocks out the entire ratio band.
     radio = np.array(np.arange(300,501,1))
     hand_picked = np.array([128,
@@ -284,7 +283,7 @@ def mask(input_array):
     return masked_data;
 
 #plots a waterfall+line plot for the specified ant. uses the same mask as above.
-def masked_auto_waterfall_lineplot (ant,colorbar_min, colorbar_max):
+def masked_auto_waterfall_lineplot (uv,ant,colorbar_min, colorbar_max):
     
     #creating the mask
     
@@ -425,7 +424,7 @@ def masked_auto_waterfall_lineplot (ant,colorbar_min, colorbar_max):
 
 
 #returns the array for the expected bandpass
-def expected_bandpass():
+def expected_bandpass(uv):
     good_curves = [uv.get_data((0,0, uv.polarization_array[0])),
                    uv.get_data((1,1, uv.polarization_array[0])),
                    uv.get_data((13,13, uv.polarization_array[0])),
@@ -442,7 +441,7 @@ def expected_bandpass():
     return average_curve;
 
 #plots a waterfall for a single auto
-def singleauto_waterfall (ant, colorbar_min, colorbar_max):
+def singleauto_waterfall (uv, ant, colorbar_min, colorbar_max):
     
     fig = plt.figure(figsize=(15,12))
     
@@ -516,7 +515,7 @@ def singleauto_waterfall (ant, colorbar_min, colorbar_max):
     return;
 
 #plots a waterfall for every antenna in the file
-def allauto_waterfall (colorbar_min, colorbar_max):
+def allauto_waterfall (uv,colorbar_min, colorbar_max):
     
     for ant in uv.antenna_numbers:
     
