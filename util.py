@@ -82,7 +82,7 @@ def allauto_waterfall_lineplot (uv, file_number ,colorbar_min, colorbar_max, sav
         #creates line subplot and positions it according to gs[1]
         line= plt.subplot(gs[1])
 
-        averaged_data= np.abs(np.average(uv.get_data((1,1, uv.polarization_array[0])),0))
+        averaged_data= np.abs(np.average(uv.get_data((ant,ant, uv.polarization_array[0])),0))
 
         plt.plot(freq,averaged_data)
         line.set_yscale('log')
@@ -185,7 +185,7 @@ def auto_waterfall_lineplot (uv, file_number, ant,colorbar_min, colorbar_max, sa
     #creates line subplot and positions it according to gs[1]
     line= plt.subplot(gs[1])
 
-    averaged_data= np.abs(np.average(uv.get_data((1,1, uv.polarization_array[0])),0))
+    averaged_data= np.abs(np.average(uv.get_data((ant,ant, uv.polarization_array[0])),0))
 
     plt.plot(freq,averaged_data)
     line.set_yscale('log')
@@ -295,7 +295,7 @@ def masked_auto_waterfall_lineplot (uv,file_number, ant,colorbar_min, colorbar_m
     
     #creating the mask
     
-    data_array = np.abs(uv.get_data((1, 1, uv.polarization_array[0])))
+    data_array = np.abs(uv.get_data((ant, ant, uv.polarization_array[0])))
     
     #this blocks out the entire ratio band.
     radio = np.array(np.arange(300,501,1))
