@@ -447,10 +447,8 @@ def expected_bandpass(uv):
                    uv.get_data((39,39, uv.polarization_array[0])),
                   ]
     good_curves = np.asarray(good_curves)
-    print(good_curves.shape)
     average_curve= np.abs(np.average(good_curves,0))
-    print(average_curve.shape)
-    average_curve = mask(average_curve)
+    average_curve = mask(uv,average_curve)
     return average_curve;
 
 #plots a waterfall for a single auto
