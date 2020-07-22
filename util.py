@@ -10,7 +10,7 @@ import numpy.ma as ma
 
 
 #plots all auto waterfall+line plots for the loaded file
-def allauto_waterfall_lineplot (uv,colorbar_min, colorbar_max):
+def allauto_waterfall_lineplot (uv, file_number ,colorbar_min, colorbar_max, save=False):
     
     for ant in uv.antenna_numbers:
         freq = uv.freq_array[0]*1e-6
@@ -35,7 +35,7 @@ def allauto_waterfall_lineplot (uv,colorbar_min, colorbar_max):
         #colors.LogNorm() puts colors on log scale
         im = plt.imshow(np.abs(uv.get_data((ant,ant, uv.polarization_array[0]))),norm=colors.LogNorm(), 
                    vmin=colorbar_min, vmax=colorbar_max, aspect='auto')
-        waterfall.set_title('Waterfall+Lineplot, Antenna '+str(ant))
+        waterfall.set_title(str(file_number)+'Waterfall+Lineplot, Antenna '+str(ant))
 
         # get an array of frequencies in MHz
         freqs = uv.freq_array[0, :] / 1000000
@@ -103,14 +103,18 @@ def allauto_waterfall_lineplot (uv,colorbar_min, colorbar_max):
         cbar = plt.colorbar(im, pad= 0.15, orientation = 'horizontal')
         cbar.set_label('Power -->')
         
-        #plt.savefig('/lustre/aoc/projects/hera/amyers/gitrepos/monsterDetection/waterfalls/'+
-        #            str(file)+'WF_LP_ant'+str(ant))
+        if save == False:
+            print('Fig not saved to file')
+        elif save == True:
+            plt.savefig('/lustre/aoc/projects/hera/amyers/gitrepos/monsterDetection/waterfalls/'+
+                        str(file_number)+'_WF_LP_ant'+str(ant))
+            print('Fig saved to file')
         plt.show()
         plt.close()
     return;
 
 #plots a single waterfall+line plot for the given antenna and colorbar lims
-def auto_waterfall_lineplot (uv,ant,colorbar_min, colorbar_max):
+def auto_waterfall_lineplot (uv, file_number, ant,colorbar_min, colorbar_max, save=False):
     
     freq = uv.freq_array[0]*1e-6
     fig = plt.figure(figsize=(20,20))
@@ -134,7 +138,7 @@ def auto_waterfall_lineplot (uv,ant,colorbar_min, colorbar_max):
     #colors.LogNorm() puts colors on log scale
     im = plt.imshow(np.abs(uv.get_data((ant,ant, uv.polarization_array[0]))),norm=colors.LogNorm(), 
                 vmin=colorbar_min, vmax=colorbar_max, aspect='auto')
-    waterfall.set_title(str(file)+' Waterfall+Lineplot, Antenna '+str(ant))
+    waterfall.set_title(str(file_number)+' Waterfall+Lineplot, Antenna '+str(ant))
 
     # get an array of frequencies in MHz
     freqs = uv.freq_array[0, :] / 1000000
@@ -201,15 +205,19 @@ def auto_waterfall_lineplot (uv,ant,colorbar_min, colorbar_max):
     #pad moves colorbar farther from plot
     cbar = plt.colorbar(im, pad= 0.15, orientation = 'horizontal')
     cbar.set_label('Power -->')
-        
-    #plt.savefig('/lustre/aoc/projects/hera/amyers/gitrepos/monsterDetection/waterfalls/'+
-    #                str(file)+'_WF_LP_ant'+str(ant))
+    
+    if save== False:
+        print('Fig not saved to file')
+    elif save == True:
+        plt.savefig('/lustre/aoc/projects/hera/amyers/gitrepos/monsterDetection/waterfalls/'+
+                        str(file_number)+'_WF_LP_ant'+str(ant))
+        print('Fig saved to file')
     plt.show()
     plt.close()
 
 
 #makes a lineplot every hour for the given antenna and loaded file
-def every_hour_lineplot(uv,ant):
+def every_hour_lineplot(uv, file_number, ant):
 
     freq = uv.freq_array[0]*1e-6
     times = np.unique(uv.time_array)
@@ -247,7 +255,7 @@ def every_hour_lineplot(uv,ant):
         dat = np.abs(uv.get_data((ant,ant,'xx'))[times_index])
 
         plt.plot(freq,dat)
-        plt.title('Ant '+str(ant)+',  time = '+str(time))
+        plt.title(str(file_number)+'Ant '+str(ant)+',  time = '+str(time))
         plt.yscale('log')
         plt.ylim((1e6,1e8))
 
@@ -283,7 +291,7 @@ def mask(uv,input_array):
     return masked_data;
 
 #plots a waterfall+line plot for the specified ant. uses the same mask as above.
-def masked_auto_waterfall_lineplot (uv,ant,colorbar_min, colorbar_max):
+def masked_auto_waterfall_lineplot (uv,file_number, ant,colorbar_min, colorbar_max, save = False):
     
     #creating the mask
     
@@ -340,7 +348,7 @@ def masked_auto_waterfall_lineplot (uv,ant,colorbar_min, colorbar_max):
     #colors.LogNorm() puts colors on log scale
     im = plt.imshow(masked_data,norm=colors.LogNorm(), 
                 vmin=colorbar_min, vmax=colorbar_max, aspect='auto')
-    waterfall.set_title(str(file)+' Masked Waterfall+Lineplot, Antenna '+str(ant))
+    waterfall.set_title(str(file_number)+' Masked Waterfall+Lineplot, Antenna '+str(ant))
 
     # get an array of frequencies in MHz
     freqs = uv.freq_array[0, :] / 1000000
@@ -416,9 +424,14 @@ def masked_auto_waterfall_lineplot (uv,ant,colorbar_min, colorbar_max):
     #pad moves colorbar farther from plot
     cbar = plt.colorbar(im, pad= 0.15, orientation = 'horizontal')
     cbar.set_label('Power -->')
-        
-    #plt.savefig('/lustre/aoc/projects/hera/amyers/gitrepos/monsterDetection/waterfalls/'+
-    #                str(file)+'_masked_WF_LP_ant'+str(ant))
+
+    if save == False:
+         print('Fig not saved to file')
+    elif save == True: 
+        plt.savefig('/lustre/aoc/projects/hera/amyers/gitrepos/monsterDetection/waterfalls/'+
+                        str(file_number)+'_masked_WF_LP_ant'+str(ant))
+        print('Fig saved to file')
+
     plt.show()
     plt.close()
 
@@ -441,7 +454,7 @@ def expected_bandpass(uv):
     return average_curve;
 
 #plots a waterfall for a single auto
-def singleauto_waterfall (uv, ant, colorbar_min, colorbar_max):
+def singleauto_waterfall (uv, file_number, ant, colorbar_min, colorbar_max, save = False):
     
     fig = plt.figure(figsize=(15,12))
     
@@ -460,7 +473,7 @@ def singleauto_waterfall (uv, ant, colorbar_min, colorbar_max):
     #colors.LogNorm() puts colors on log scale
     im = plt.imshow(np.abs(uv.get_data((ant,ant, uv.polarization_array[0]))),norm=colors.LogNorm(), 
            vmin=colorbar_min, vmax=colorbar_max, aspect='auto')
-    plt.title('Auto_'+str(ant)+' Waterfall Plot')
+    plt.title(str(file_number)+'Auto_'+str(ant)+' Waterfall Plot')
     plt.xlabel('Frequency (MHz)')
     
     # get an array of frequencies in MHz
@@ -509,20 +522,25 @@ def singleauto_waterfall (uv, ant, colorbar_min, colorbar_max):
     #makes it so that the second axis does not alter the structure of the figure
     jd_ax.autoscale(False)
     lst_ax.autoscale(False)
+
+    if save == False:
+         print('Fig not saved to file')
+    elif save == True: 
+        plt.savefig('/lustre/aoc/projects/hera/amyers/gitrepos/monsterDetection/waterfalls/'+
+                        str(file_number)+'WF_ant'+str(ant))
+        print('Fig saved to file')
     
     plt.show()
     plt.close()
     return;
 
 #plots a waterfall for every antenna in the file
-def allauto_waterfall (uv,colorbar_min, colorbar_max):
+def allauto_waterfall (uv, file_number, colorbar_min, colorbar_max, save = False):
     
     for ant in uv.antenna_numbers:
     
         fig = plt.figure(figsize=(15,12))
     
-    
-
         #create time axis
         jd_ax=plt.gca()
 
@@ -536,7 +554,7 @@ def allauto_waterfall (uv,colorbar_min, colorbar_max):
         #colors.LogNorm() puts colors on log scale
         im = plt.imshow(np.abs(uv.get_data((ant,ant, uv.polarization_array[0]))),norm=colors.LogNorm(), 
            vmin=colorbar_min, vmax=colorbar_max, aspect='auto')
-        plt.title('Auto_'+str(ant)+' Waterfall Plot')
+        plt.title(str(file_number)+'Auto_'+str(ant)+' Waterfall Plot')
         plt.xlabel('Frequency (MHz)')
         
         # get an array of frequencies in MHz
@@ -586,8 +604,13 @@ def allauto_waterfall (uv,colorbar_min, colorbar_max):
         jd_ax.autoscale(False)
         lst_ax.autoscale(False)
         
-        plt.savefig('/lustre/aoc/projects/hera/amyers/gitrepos/monsterDetection/waterfalls/'+str(file)+
-                    '_WF_ant'+str(ant))
+        if save == False:
+            print('Fig not saved to file')
+        elif save == True:
+            plt.savefig('/lustre/aoc/projects/hera/amyers/gitrepos/monsterDetection/waterfalls/'+str(file_number)+
+                        '_WF_ant'+str(ant))
+            print('Fig saved to file')
+        
         plt.show()
         plt.close()
     return;
