@@ -14,6 +14,6 @@ source ~/.bashrc@
 conda activate hera
 
 # run python script
-cd /lustre/aoc/projects/hera/amyers/scripts/
+cd /lustre/aoc/projects/hera/amyers/gitrepos/monsterDetection/scripts/
 python test_py.py
 cd /lustre/aoc/projects/hera/amyers/
