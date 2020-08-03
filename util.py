@@ -449,7 +449,7 @@ def expected_power_bandpass(uv):
     good_curves = np.asarray(good_curves)
     average_curve= np.abs(np.average(good_curves,0))
     expect_band = mask(uv,average_curve)
-    return expect_band[0];
+    return expect_band[0]
 
 #plots a waterfall for a single auto
 def singleauto_waterfall (uv, file_number, ant, colorbar_min, colorbar_max, save = False):
