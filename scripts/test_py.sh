@@ -5,9 +5,9 @@
 #PBS -l walltime=144:00:00
 #PBS -l vmem=64g
 #PBS -j oe
-#PBS -o /lustre/aoc/projects/hera/amyers/out/test_py.out
+#PBS -o /lustre/aoc/projects/hera/amyers/out/
 #PBS -m be
-#PBS -M pyxstar@uw.edu
+#PBS -M amyers2@uw.edu
 
 # load python environment
 source ~/.bashrc@
