@@ -10,7 +10,7 @@ import numpy.ma as ma
 
 
 #plots all auto waterfall+line plots for the loaded file
-def allauto_waterfall_lineplot (uv, file_number ,colorbar_min, colorbar_max, save=False):
+def allauto_waterfall_lineplot (uv, file_number ,colorbar_min, colorbar_max, save=False, boundaries = False):
     
     for ant in uv.antenna_numbers:
         freq = uv.freq_array[0]*1e-6
@@ -133,7 +133,7 @@ def allauto_waterfall_lineplot (uv, file_number ,colorbar_min, colorbar_max, sav
     return;
 
 #plots a single waterfall+line plot for the given antenna and colorbar lims
-def auto_waterfall_lineplot (uv, file_number, ant,colorbar_min, colorbar_max, save=False):
+def auto_waterfall_lineplot (uv, file_number, ant,colorbar_min, colorbar_max, save=False, boundaries = False):
     
     freq = uv.freq_array[0]*1e-6
     fig = plt.figure(figsize=(20,20))
