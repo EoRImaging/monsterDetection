@@ -82,6 +82,25 @@ def allauto_waterfall_lineplot (uv, file_number ,colorbar_min, colorbar_max, sav
         #creates line subplot and positions it according to gs[1]
         line= plt.subplot(gs[1])
 
+        #drawing faint grey lines at boundaries
+        if boundaries == True:
+            channel_boundaries = [192,384,576,768,960,1152,1344]
+
+            freq_boundaries = []
+            for channel in channel_boundaries:
+                freq_boundary = freq[channel]
+                freq_boundaries.append(freq_boundary)
+                
+                
+            plt.axvline(freq_boundaries[0],0,1, color = '0.8')
+            plt.axvline(freq_boundaries[1],0,1, color = '0.8')
+            plt.axvline(freq_boundaries[2],0,1, color = '0.8')
+            plt.axvline(freq_boundaries[3],0,1, color = '0.8')
+            plt.axvline(freq_boundaries[4],0,1, color = '0.8')
+            plt.axvline(freq_boundaries[5],0,1, color = '0.8')
+            plt.axvline(freq_boundaries[6],0,1, color = '0.8')
+
+
         averaged_data= np.abs(np.average(uv.get_data((ant,ant, uv.polarization_array[0])),0))
 
         plt.plot(freq,averaged_data)
@@ -184,6 +203,24 @@ def auto_waterfall_lineplot (uv, file_number, ant,colorbar_min, colorbar_max, sa
 
     #creates line subplot and positions it according to gs[1]
     line= plt.subplot(gs[1])
+
+    #drawing faint grey lines at boundaries
+    if boundaries == True:
+        channel_boundaries = [192,384,576,768,960,1152,1344]
+
+        freq_boundaries = []
+        for channel in channel_boundaries:
+            freq_boundary = freq[channel]
+            freq_boundaries.append(freq_boundary)
+            
+            
+        plt.axvline(freq_boundaries[0],0,1, color = '0.8')
+        plt.axvline(freq_boundaries[1],0,1, color = '0.8')
+        plt.axvline(freq_boundaries[2],0,1, color = '0.8')
+        plt.axvline(freq_boundaries[3],0,1, color = '0.8')
+        plt.axvline(freq_boundaries[4],0,1, color = '0.8')
+        plt.axvline(freq_boundaries[5],0,1, color = '0.8')
+        plt.axvline(freq_boundaries[6],0,1, color = '0.8')
 
     averaged_data= np.abs(np.average(uv.get_data((ant,ant, uv.polarization_array[0])),0))
 
