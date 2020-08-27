@@ -151,7 +151,7 @@ def nosky_ripple_trap(uv):
 #zero flatline with spikes
 #this monster also does not see the sky, but has a median 0 value and an average nonzero value.
 
-def zero_flatline_spike (uv):
+def zero_flatline_spike_trap (uv):
 
     for ant in uv.antenna_numbers:
 
