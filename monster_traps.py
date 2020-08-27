@@ -459,3 +459,26 @@ def whole_bandpass_spike_trap(uv):
             whole_bandpass_spikes.append(ant)
 
     print('Whole Bandpass Spikes:'+str(whole_bandpass_spikes))
+
+
+#Adele's function for catching antennas that do not fit bandpass shape and antennas that have 
+#high power at high frequency.
+#BUT THIS CANNOT DIFFERENTIATE BETWEEN THE TWO MONSTERS.
+
+def bandpass_hphf_trap(uv):
+    bandpass_hphf=[]
+    for ant in uv.antenna_numbers:
+
+        freq = uv.freq_array[0]*1e-6
+        x=freq.reshape((-1,1))
+        y= np.abs(uv.get_data(ant,ant,'xx')[0])
+
+        model = LinearRegression().fit(x,y)
+        r_sq = model.score(x,y)
+
+        #i have found that all normal bandpasses have r_sq values <.1
+        #all curves that have weird bandpasses or high power at high frequency have had r_sq >.1
+        if r_sq >=.1:
+            bandpass_hphf.append(ant)
+
+    print('Bandpass/High Power High Frequency:'+str(bandpass_hphf))
