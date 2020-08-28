@@ -313,7 +313,7 @@ def blob_trap(uv):
 
                     consecutive_three_count.append(diff)
                     #if there are six 3 diffs in a row, and we have not already had a blob
-                    if len(consecutive_three_count)==4:
+                    if len(consecutive_three_count)>5:
                         blob_ants.append(ant)
                         #make sure antenna is not double counted
                         blob_count+=1
